@@ -37,7 +37,11 @@ export function Keyboard({ language = "en", pressedKey }: KeyboardProps) {
     <div className="flex flex-col">
       {rows.map(renderRow)}
       <div className="flex justify-center">
-        <Button className="w-1/2">space</Button>
+        <Button
+          className="w-1/2"
+          variant={pressedKey === " " ? "secondary" : "primary"}>
+          space
+        </Button>
       </div>
     </div>
   );
