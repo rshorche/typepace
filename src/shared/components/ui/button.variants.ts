@@ -1,7 +1,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
 
 export const buttonVariants = cva(
-  "inline-flex focus:outline-none items-center justify-center rounded-xl border-0 m-2.5 px-5 py-3 text-xl transition-all",
+  "inline-flex focus:outline-none items-center justify-center rounded-xl border-0 m-2 w-16 h-16 text-xl transition-all",
   {
     variants: {
       variant: {
@@ -16,7 +16,6 @@ export const buttonVariants = cva(
     },
     defaultVariants: {
       variant: "primary",
-      width: "auto",
     },
   }
 );
