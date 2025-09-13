@@ -1,0 +1,52 @@
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: break-word;
+  }
+}
+
+@import "tailwindcss";
+@layer base {
+  body {
+    @apply flex min-h-screen items-center justify-center bg-zinc-900 text-zinc-50;
+  }
+}
+
+@theme {
+  --shadow-up: 1px 1px 2px 1px rgb(25 25 25), -1px -1px 2px 1px rgb(82 82 82);
+  --shadow-down:
+    inset -1px -1px 2px 1px rgb(131, 131, 131),
+    inset 1px 1px 2px 2px rgb(0, 0, 0);
+}
