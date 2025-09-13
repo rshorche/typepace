@@ -1,8 +1,7 @@
+import { Typing } from "@/features/typing/Typing";
 
 function App() {
-  return (
-    <div>App</div>
-  )
+  return <Typing />;
 }
 
-export default App
+export default App;

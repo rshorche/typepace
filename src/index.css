@@ -40,7 +40,7 @@
 @import "tailwindcss";
 @layer base {
   body {
-    @apply flex min-h-screen items-center justify-center bg-zinc-900 text-zinc-50;
+    @apply flex min-h-screen items-center justify-center bg-zinc-800 text-zinc-50;
   }
 }
 
