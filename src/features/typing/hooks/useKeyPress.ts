@@ -1,18 +1,44 @@
 import { useState, useEffect } from "react";
+import { useAudio } from "@/shared/hooks/useAudio";
 
-export function useKeyPress() {
+export function useKeyPress(textToType: string) {
+  const [userInput, setUserInput] = useState<string>("");
   const [pressedKey, setPressedKey] = useState<string | null>(null);
-  const [typedText, setTypedText] = useState<string>("");
+  const [errorIndexes, setErrorIndexes] = useState<Set<number>>(new Set());
+
+  const { playCorrectSound, playErrorSound } = useAudio();
+
+  const currentIndex = userInput.length;
+  const currentChar = textToType[currentIndex];
+
+  useEffect(() => {
+    setUserInput("");
+    setErrorIndexes(new Set());
+  }, [textToType]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Backspace") {
+        event.preventDefault();
+      }
+
       const { key } = event;
       setPressedKey(key.toLowerCase());
 
+      if (currentIndex >= textToType.length) {
+        return;
+      }
+
       if (key === "Backspace") {
-        setTypedText((prev) => prev.slice(0, -1));
+        setUserInput((prev) => prev.slice(0, -1));
       } else if (key.length === 1) {
-        setTypedText((prev) => prev + key);
+        if (key === currentChar) {
+          playCorrectSound();
+          setUserInput((prev) => prev + key);
+        } else {
+          playErrorSound();
+          setErrorIndexes((prev) => new Set(prev).add(currentIndex));
+        }
       }
     };
 
@@ -27,7 +53,7 @@ export function useKeyPress() {
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
     };
-  }, []);
+  }, [textToType, currentIndex, currentChar, playCorrectSound, playErrorSound]);
 
-  return { pressedKey, typedText };
+  return { pressedKey, userInput, currentIndex, errorIndexes };
 }

@@ -6,13 +6,16 @@ import { getRandomText } from "./utils/textGenerator";
 import { Button } from "@/shared/components/ui/Button";
 
 export function Typing() {
-  const { pressedKey } = useKeyPress();
   const [language, setLanguage] = useState<"en" | "fa">("en");
   const [textToType, setTextToType] = useState(() => getRandomText(language));
 
+  const { pressedKey, userInput, currentIndex, errorIndexes } =
+    useKeyPress(textToType);
+
   const handleSelectLanguage = (selectedLanguage: "en" | "fa") => {
     setLanguage(selectedLanguage);
-    setTextToType(getRandomText(selectedLanguage));
+    const newText = getRandomText(selectedLanguage);
+    setTextToType(newText);
   };
 
   const containerMaxWidth =
@@ -20,7 +23,7 @@ export function Typing() {
 
   return (
     <div
-      className={`flex w-full flex-col items-center text-left gap-5 my-5 ${containerMaxWidth}`}>
+      className={`flex w-full flex-col items-center gap-5 my-5 ${containerMaxWidth}`}>
       <div className="flex gap-4">
         <Button
           onClick={() => handleSelectLanguage("en")}
@@ -36,7 +39,13 @@ export function Typing() {
         </Button>
       </div>
 
-      <Display text={textToType} language={language} />
+      <Display
+        text={textToType}
+        userInput={userInput}
+        currentIndex={currentIndex}
+        errorIndexes={errorIndexes}
+        language={language}
+      />
 
       <div className="flex flex-col items-center rounded-2xl bg-zinc-800 p-4 shadow-up">
         <Keyboard pressedKey={pressedKey} language={language} />

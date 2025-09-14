@@ -43,7 +43,17 @@
     @apply flex min-h-screen items-center justify-center bg-zinc-800 text-zinc-50;
   }
 }
+@layer components {
+  .blinking-cursor {
+    animation: blink 1s step-end infinite;
+  }
 
+  @keyframes blink {
+    50% {
+      opacity: 0.5;
+    }
+  }
+}
 @theme {
   --shadow-up: 1px 1px 2px 1px rgb(25 25 25), -1px -1px 2px 1px rgb(82 82 82);
   --shadow-down:
