@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Keyboard } from "./components/Keyboard";
 import { useKeyPress } from "./hooks/useKeyPress";
 import { Display } from "./components/Display";
+import { Stats } from "./components/Stats";
 import { getRandomText } from "./utils/textGenerator";
 import { Button } from "@/shared/components/ui/Button";
 
@@ -9,8 +10,16 @@ export function Typing() {
   const [language, setLanguage] = useState<"en" | "fa">("en");
   const [textToType, setTextToType] = useState(() => getRandomText(language));
 
-  const { pressedKey, userInput, currentIndex, errorIndexes } =
-    useKeyPress(textToType);
+  const {
+    pressedKey,
+    userInput,
+    currentIndex,
+    errorIndexes,
+    status,
+    elapsedTime,
+    wpm,
+    accuracy,
+  } = useKeyPress(textToType);
 
   const handleSelectLanguage = (selectedLanguage: "en" | "fa") => {
     setLanguage(selectedLanguage);
@@ -39,6 +48,14 @@ export function Typing() {
         </Button>
       </div>
 
+      <Stats
+        wpm={wpm}
+        accuracy={accuracy}
+        errors={errorIndexes.size}
+        time={elapsedTime}
+        language={language}
+      />
+
       <Display
         text={textToType}
         userInput={userInput}
@@ -47,9 +64,17 @@ export function Typing() {
         language={language}
       />
 
-      <div className="flex flex-col items-center rounded-2xl bg-zinc-800 p-4 shadow-up">
-        <Keyboard pressedKey={pressedKey} language={language} />
-      </div>
+      {status !== "finished" && (
+        <div className="flex flex-col items-center rounded-2xl bg-zinc-800 p-4 shadow-up">
+          <Keyboard pressedKey={pressedKey} language={language} />
+        </div>
+      )}
+
+      {status === "finished" && (
+        <Button onClick={() => handleSelectLanguage(language)} className="mt-4">
+          دوباره
+        </Button>
+      )}
     </div>
   );
 }
