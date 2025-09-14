@@ -1,69 +1,65 @@
-# React + TypeScript + Vite
+# TypePace - اپلیکیشن تست سرعت تایپ
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+یک اپلیکیشن مدرن و مینیمال برای تست و بهبود سرعت تایپ به دو زبان **فارسی** و **انگلیسی**. این پروژه با استفاده از جدیدترین تکنولوژی‌های وب (React, TypeScript, Vite) و با تمرکز بر معماری تمیز، تجربه کاربری پویا و کدنویسی بهینه ساخته شده است.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ ویژگی‌ها (Features)
 
-## Expanding the ESLint configuration
+- **پشتیبانی دو زبانه:** جابجایی آنی بین کیبورد و متون فارسی و انگلیسی.
+- **بازخورد آنی:**
+  - **بصری:** تغییر رنگ حروف صحیح و غلط، کرسر چشمک‌زن برای نمایش موقعیت فعلی و انیمیشن لرزش در هنگام خطا.
+  - **صوتی:** پخش صدای متفاوت برای تایپ صحیح و اشتباه.
+- **کیبورد مجازی تعاملی:** نمایش کلید فشرده شده روی کیبورد مجازی با افکت `shadow`.
+- **منطق تایپ حرفه‌ای:**
+  - جلوگیری از پیشروی در صورت تایپ حرف اشتباه.
+  - به خاطر سپردن خطاها (حتی پس از تصحیح، خطا در آمار محاسبه می‌شود).
+- **آمار دقیق:** محاسبه و نمایش زنده **سرعت (WPM)**، **دقت**، **تعداد خطاها** و **زمان سپری شده**.
+- **کنترل کامل:** قابلیت ریست کردن تست در هر لحظه.
+- **طراحی واکنش‌گرا:** چیدمان بهینه برای نمایش در اندازه‌های مختلف صفحه.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🛠️ تکنولوژی‌های استفاده شده (Tech Stack)
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+- **React:** (با استفاده کامل از هوک‌ها)
+- **Vite:** ابزار ساخت (Build Tool) مدرن و فوق‌العاده سریع.
+- **TypeScript:** برای تضمین کیفیت و استحکام کد.
+- **Tailwind CSS:** برای استایل‌دهی سریع و مقیاس‌پذیر.
+- **class-variance-authority (cva):** برای ساخت کامپوننت‌های UI با واریانت‌های مختلف.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🏗️ معماری (Architecture)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+این پروژه با معماری تمیز و مقیاس‌پذیر **مبتنی بر ویژگی (Feature-Based)** ساخته شده است:
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **جداسازی کامل منطق از UI:** تمام منطق اصلی اپلیکیشن در یک هوک سفارشی (`useKeyPress`) کپسوله شده است.
+- **کامپوننت‌های تک‌مسئولیتی:** هر کامپوننت (`Keyboard`, `Display`, `Stats`) فقط یک وظیفه مشخص را به درستی انجام می‌دهد.
+- **ساختار پوشه‌بندی `shared` و `features`:** برای تفکیک واضح کدهای عمومی از کدهای اختصاصی هر ویژگی.
+
+---
+
+## 🚀 راه‌اندازی و اجرا (Setup and Run)
+
+1.  **کلون کردن ریپازیتوری:**
+    ```bash
+    git clone https://github.com/rshorche/typepace.git
+    ```
+2.  **نصب وابستگی‌ها:**
+    ```bash
+    npm install
+    ```
+3.  **اجرای پروژه در حالت توسعه:**
+    ```bash
+    npm run dev
+    ```
+
+---
+
+## 📜 اسکریپت‌های موجود (Available Scripts)
+
+- `npm run dev`: اجرای پروژه در حالت توسعه.
+- `npm run build`: بیلد گرفتن از پروژه برای محیط پروداکشن.
+- `npm run lint`: اجرای ESLint برای بررسی خطاهای کد.
+- `npm run preview`: پیش‌نمایش نسخه بیلد شده.
