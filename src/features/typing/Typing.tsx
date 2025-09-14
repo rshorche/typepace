@@ -21,6 +21,11 @@ export function Typing() {
     accuracy,
   } = useKeyPress(textToType);
 
+  const handleReset = () => {
+    const newText = getRandomText(language);
+    setTextToType(newText);
+  };
+
   const handleSelectLanguage = (selectedLanguage: "en" | "fa") => {
     setLanguage(selectedLanguage);
     const newText = getRandomText(selectedLanguage);
@@ -33,18 +38,23 @@ export function Typing() {
   return (
     <div
       className={`flex w-full flex-col items-center gap-5 my-5 ${containerMaxWidth}`}>
-      <div className="flex gap-4">
-        <Button
-          onClick={() => handleSelectLanguage("en")}
-          variant={language === "en" ? "secondary" : "primary"}
-          className="w-36">
-          English
-        </Button>
-        <Button
-          onClick={() => handleSelectLanguage("fa")}
-          variant={language === "fa" ? "secondary" : "primary"}
-          className="w-36">
-          فارسی
+      <div className="flex w-full justify-between items-center">
+        <div className="flex gap-4">
+          <Button
+            onClick={() => handleSelectLanguage("en")}
+            variant={language === "en" ? "secondary" : "primary"}
+            className="w-36">
+            English
+          </Button>
+          <Button
+            onClick={() => handleSelectLanguage("fa")}
+            variant={language === "fa" ? "secondary" : "primary"}
+            className="w-36">
+            فارسی
+          </Button>
+        </div>
+        <Button onClick={handleReset} className="w-36">
+          Reset
         </Button>
       </div>
 
@@ -68,12 +78,6 @@ export function Typing() {
         <div className="flex flex-col items-center rounded-2xl bg-zinc-800 p-4 shadow-up">
           <Keyboard pressedKey={pressedKey} language={language} />
         </div>
-      )}
-
-      {status === "finished" && (
-        <Button onClick={() => handleSelectLanguage(language)} className="mt-4">
-          دوباره
-        </Button>
       )}
     </div>
   );
